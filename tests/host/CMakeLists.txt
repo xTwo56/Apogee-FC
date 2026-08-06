@@ -1,0 +1,5 @@
+add_executable(apogee_project_identity_test project_identity_test.cpp)
+target_link_libraries(apogee_project_identity_test PRIVATE apogee_common)
+
+add_test(NAME project_identity COMMAND apogee_project_identity_test)
+
