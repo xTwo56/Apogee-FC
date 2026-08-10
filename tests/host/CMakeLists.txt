@@ -3,3 +3,7 @@ target_link_libraries(apogee_project_identity_test PRIVATE apogee_common)
 
 add_test(NAME project_identity COMMAND apogee_project_identity_test)
 
+add_executable(apogee_flight_mode_test flight_mode_test.cpp)
+target_link_libraries(apogee_flight_mode_test PRIVATE apogee_common)
+
+add_test(NAME flight_mode COMMAND apogee_flight_mode_test)
