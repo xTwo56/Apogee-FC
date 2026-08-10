@@ -7,3 +7,8 @@ add_executable(apogee_flight_mode_test flight_mode_test.cpp)
 target_link_libraries(apogee_flight_mode_test PRIVATE apogee_common)
 
 add_test(NAME flight_mode COMMAND apogee_flight_mode_test)
+
+add_executable(apogee_telemetry_test telemetry_test.cpp)
+target_link_libraries(apogee_telemetry_test PRIVATE apogee_common)
+
+add_test(NAME telemetry COMMAND apogee_telemetry_test)
