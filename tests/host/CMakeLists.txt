@@ -12,3 +12,8 @@ add_executable(apogee_telemetry_test telemetry_test.cpp)
 target_link_libraries(apogee_telemetry_test PRIVATE apogee_common)
 
 add_test(NAME telemetry COMMAND apogee_telemetry_test)
+
+add_executable(apogee_sensor_source_test sensor_source_test.cpp)
+target_link_libraries(apogee_sensor_source_test PRIVATE apogee_common)
+
+add_test(NAME sensor_source COMMAND apogee_sensor_source_test)
