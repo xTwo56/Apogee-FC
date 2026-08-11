@@ -17,3 +17,8 @@ add_executable(apogee_sensor_source_test sensor_source_test.cpp)
 target_link_libraries(apogee_sensor_source_test PRIVATE apogee_common)
 
 add_test(NAME sensor_source COMMAND apogee_sensor_source_test)
+
+add_executable(apogee_health_test health_test.cpp)
+target_link_libraries(apogee_health_test PRIVATE apogee_common)
+
+add_test(NAME health COMMAND apogee_health_test)
