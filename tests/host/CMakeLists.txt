@@ -22,3 +22,8 @@ add_executable(apogee_health_test health_test.cpp)
 target_link_libraries(apogee_health_test PRIVATE apogee_common)
 
 add_test(NAME health COMMAND apogee_health_test)
+
+add_executable(apogee_fault_manager_test fault_manager_test.cpp)
+target_link_libraries(apogee_fault_manager_test PRIVATE apogee_common)
+
+add_test(NAME fault_manager COMMAND apogee_fault_manager_test)

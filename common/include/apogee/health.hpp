@@ -25,6 +25,10 @@ public:
         return (active_faults_ & static_cast<std::uint8_t>(fault)) != 0U;
     }
 
+    [[nodiscard]] constexpr std::uint8_t fault_mask() const noexcept {
+        return active_faults_;
+    }
+
 private:
     std::uint8_t active_faults_;
 };
