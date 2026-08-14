@@ -27,3 +27,13 @@ add_executable(apogee_fault_manager_test fault_manager_test.cpp)
 target_link_libraries(apogee_fault_manager_test PRIVATE apogee_common)
 
 add_test(NAME fault_manager COMMAND apogee_fault_manager_test)
+
+add_executable(apogee_frame_codec_test frame_codec_test.cpp)
+target_link_libraries(apogee_frame_codec_test PRIVATE apogee_common)
+
+add_test(NAME frame_codec COMMAND apogee_frame_codec_test)
+
+add_executable(apogee_telemetry_codec_test telemetry_codec_test.cpp)
+target_link_libraries(apogee_telemetry_codec_test PRIVATE apogee_common)
+
+add_test(NAME telemetry_codec COMMAND apogee_telemetry_codec_test)
