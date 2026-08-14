@@ -15,8 +15,13 @@ target_compile_options(
         $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall;-Wextra;-Wpedantic;-Wconversion;-Wsign-conversion;-Werror>
 )
 
+add_executable(
+    apogee_ground_receiver
+    host/apogee_ground_receiver.cpp
+)
+target_link_libraries(apogee_ground_receiver PRIVATE apogee_common)
+
 include(CTest)
 if(BUILD_TESTING)
     add_subdirectory(tests/host)
 endif()
-

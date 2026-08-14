@@ -1,0 +1,13 @@
+/ {
+	aliases {
+		apogee-telemetry-uart = &uart4;
+	};
+};
+
+&uart4 {
+	/* UART4 is dedicated to bounded binary telemetry frames. */
+	pinctrl-0 = <&uart4_tx_pc10 &uart4_rx_pc11>;
+	pinctrl-names = "default";
+	current-speed = <115200>;
+	status = "okay";
+};

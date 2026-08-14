@@ -8,6 +8,7 @@ machine LoadPlatformDescription @platforms/boards/stm32f4_discovery-kit.repl
 $bin?=@build/flight/zephyr/zephyr.elf
 
 showAnalyzer sysbus.usart2
+sysbus.uart4 CreateFileBackend @/tmp/apogee_fc_telemetry.bin true
 
 macro reset
 """

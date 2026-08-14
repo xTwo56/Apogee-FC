@@ -37,3 +37,8 @@ add_executable(apogee_telemetry_codec_test telemetry_codec_test.cpp)
 target_link_libraries(apogee_telemetry_codec_test PRIVATE apogee_common)
 
 add_test(NAME telemetry_codec COMMAND apogee_telemetry_codec_test)
+
+add_executable(apogee_frame_stream_decoder_test frame_stream_decoder_test.cpp)
+target_link_libraries(apogee_frame_stream_decoder_test PRIVATE apogee_common)
+
+add_test(NAME frame_stream_decoder COMMAND apogee_frame_stream_decoder_test)
