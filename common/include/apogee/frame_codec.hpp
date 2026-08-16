@@ -14,6 +14,8 @@ inline constexpr std::size_t minimum_frame_size{12U};
 
 enum class MessageType : std::uint8_t {
     Telemetry = 0x01U,
+    Command = 0x10U,
+    CommandAck = 0x11U,
 };
 
 struct Frame {
@@ -86,6 +88,39 @@ struct DecodeResult {
 
 namespace detail {
 
+constexpr bool encode_message_type(MessageType type,
+                                   std::uint8_t& encoded) noexcept {
+    switch (type) {
+    case MessageType::Telemetry:
+        encoded = 0x01U;
+        return true;
+    case MessageType::Command:
+        encoded = 0x10U;
+        return true;
+    case MessageType::CommandAck:
+        encoded = 0x11U;
+        return true;
+    }
+    return false;
+}
+
+constexpr bool decode_message_type(std::uint8_t encoded,
+                                   MessageType& type) noexcept {
+    switch (encoded) {
+    case 0x01U:
+        type = MessageType::Telemetry;
+        return true;
+    case 0x10U:
+        type = MessageType::Command;
+        return true;
+    case 0x11U:
+        type = MessageType::CommandAck;
+        return true;
+    default:
+        return false;
+    }
+}
+
 constexpr void write_u16_le(std::array<std::uint8_t, maximum_frame_size>& bytes,
                             std::size_t offset,
                             std::uint16_t value) noexcept {
@@ -124,12 +159,14 @@ constexpr void write_u32_le(std::array<std::uint8_t, maximum_frame_size>& bytes,
 
 [[nodiscard]] constexpr EncodeResult encode(const Frame& input) noexcept {
     EncodeResult result;
+    std::uint8_t encoded_message_type{0U};
 
     if (input.version != protocol_version) {
         result.status = EncodeStatus::UnsupportedVersion;
         return result;
     }
-    if (input.message_type != MessageType::Telemetry) {
+    if (!detail::encode_message_type(input.message_type,
+                                     encoded_message_type)) {
         result.status = EncodeStatus::UnsupportedMessageType;
         return result;
     }
@@ -142,7 +179,7 @@ constexpr void write_u32_le(std::array<std::uint8_t, maximum_frame_size>& bytes,
     bytes[0U] = 0xA5U;
     bytes[1U] = 0x5AU;
     bytes[2U] = input.version;
-    bytes[3U] = static_cast<std::uint8_t>(input.message_type);
+    bytes[3U] = encoded_message_type;
     detail::write_u16_le(bytes, 4U, input.payload_length);
     detail::write_u32_le(bytes, 6U, input.sequence);
 
@@ -175,7 +212,8 @@ constexpr void write_u32_le(std::array<std::uint8_t, maximum_frame_size>& bytes,
         result.status = DecodeStatus::UnsupportedVersion;
         return result;
     }
-    if (bytes[3U] != static_cast<std::uint8_t>(MessageType::Telemetry)) {
+    MessageType message_type{MessageType::Telemetry};
+    if (!detail::decode_message_type(bytes[3U], message_type)) {
         result.status = DecodeStatus::UnsupportedMessageType;
         return result;
     }
@@ -206,7 +244,7 @@ constexpr void write_u32_le(std::array<std::uint8_t, maximum_frame_size>& bytes,
     }
 
     result.frame.version = bytes[2U];
-    result.frame.message_type = MessageType::Telemetry;
+    result.frame.message_type = message_type;
     result.frame.payload_length = payload_length;
     result.frame.sequence = detail::read_u32_le(bytes, 6U);
     for (std::size_t index = 0U; index < payload_length; ++index) {

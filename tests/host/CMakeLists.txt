@@ -42,3 +42,23 @@ add_executable(apogee_frame_stream_decoder_test frame_stream_decoder_test.cpp)
 target_link_libraries(apogee_frame_stream_decoder_test PRIVATE apogee_common)
 
 add_test(NAME frame_stream_decoder COMMAND apogee_frame_stream_decoder_test)
+
+add_executable(apogee_command_codec_test command_codec_test.cpp)
+target_link_libraries(apogee_command_codec_test PRIVATE apogee_common)
+
+add_test(NAME command_codec COMMAND apogee_command_codec_test)
+
+add_executable(apogee_command_processor_test command_processor_test.cpp)
+target_link_libraries(apogee_command_processor_test PRIVATE apogee_common)
+
+add_test(NAME command_processor COMMAND apogee_command_processor_test)
+
+add_executable(apogee_ground_client_test ground_client_test.cpp)
+target_include_directories(
+    apogee_ground_client_test
+    PRIVATE
+        "${PROJECT_SOURCE_DIR}/host/include"
+)
+target_link_libraries(apogee_ground_client_test PRIVATE apogee_common)
+
+add_test(NAME ground_client COMMAND apogee_ground_client_test)

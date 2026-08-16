@@ -16,10 +16,15 @@ target_compile_options(
 )
 
 add_executable(
-    apogee_ground_receiver
-    host/apogee_ground_receiver.cpp
+    apogee_ground_client
+    host/apogee_ground_client.cpp
 )
-target_link_libraries(apogee_ground_receiver PRIVATE apogee_common)
+target_include_directories(
+    apogee_ground_client
+    PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/host/include"
+)
+target_link_libraries(apogee_ground_client PRIVATE apogee_common)
 
 include(CTest)
 if(BUILD_TESTING)

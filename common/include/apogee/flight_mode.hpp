@@ -12,6 +12,7 @@ enum class FlightEvent {
     BootCompleted,
     HealthConfirmed,
     FaultDetected,
+    SafeModeRequested,
 };
 
 class FlightModeStateMachine {
@@ -39,7 +40,8 @@ public:
             }
             break;
         case FlightMode::Nominal:
-            if (event == FlightEvent::FaultDetected) {
+            if (event == FlightEvent::FaultDetected ||
+                event == FlightEvent::SafeModeRequested) {
                 mode_ = FlightMode::Safe;
                 return true;
             }

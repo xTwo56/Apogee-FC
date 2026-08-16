@@ -20,6 +20,7 @@ constexpr std::array events{
     apogee::FlightEvent::BootCompleted,
     apogee::FlightEvent::HealthConfirmed,
     apogee::FlightEvent::FaultDetected,
+    apogee::FlightEvent::SafeModeRequested,
 };
 
 constexpr std::array expectations{
@@ -27,15 +28,18 @@ constexpr std::array expectations{
         Expectation{true, apogee::FlightMode::Safe},
         Expectation{false, apogee::FlightMode::Boot},
         Expectation{false, apogee::FlightMode::Boot},
+        Expectation{false, apogee::FlightMode::Boot},
     },
     std::array{
         Expectation{false, apogee::FlightMode::Safe},
         Expectation{true, apogee::FlightMode::Nominal},
         Expectation{false, apogee::FlightMode::Safe},
+        Expectation{false, apogee::FlightMode::Safe},
     },
     std::array{
         Expectation{false, apogee::FlightMode::Nominal},
         Expectation{false, apogee::FlightMode::Nominal},
+        Expectation{true, apogee::FlightMode::Safe},
         Expectation{true, apogee::FlightMode::Safe},
     },
 };
